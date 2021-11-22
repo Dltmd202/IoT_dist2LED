@@ -52,9 +52,10 @@ class ServerApplication:
         elif 40 < self.distance:
             msg["blue"] = True
             status = "blue"
-        if self.status and self.status != status:
+        if not self.status or self.status != status:
             self.status = status
             self.client.publish("control/led", json.dumps(msg))
+
 
 
     def run(self, kwargs=["localhost"]):
