@@ -5,13 +5,13 @@ import paho.mqtt.client as mqtt
 class LedController:
     def __init__(self, led_red=22, led_green=27, led_blue=17):
         self.client = self.getClient()
-        self.onLight = None
         self.distance = None
-        self.before_led = None
-        self.after_led = None
         self.led_red = led_red
         self.led_green = led_green
         self.led_blue = led_blue
+        self.red_status = False
+        self.green_status = False
+        self.blue_status = False
         self.gpio_init()
 
     def gpio_init(self):
@@ -37,17 +37,17 @@ class LedController:
         return client
 
     def run_led(self):
-        if self.before_led:
-            gpio.output(self.before_led, False)
-        if self.after_led:
-            gpio.output(self.after_led, True)
+        gpio.output(self.led_red, self.red_status)
+        gpio.output(self.led_green, self.green_status)
+        gpio.output(self.led_blue, self.blue_status)
 
 
     def distance_dealing(self, msg):
         distance_info = json.loads(msg.payload)
         self.distance = distance_info['distance']
-        self.before_led = distance_info['before_led']
-        self.after_led = distance_info['after_led']
+        self.red_status = distance_info['red']
+        self.green_status = distance_info['green']
+        self.blue_status = distance_info['blue']
 
     def run(self):
         self.client.connect("localhost")
