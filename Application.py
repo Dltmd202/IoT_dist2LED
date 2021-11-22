@@ -35,7 +35,7 @@ class ServerApplication:
 
     def distance_dealing(self, msg):
         distance_info = json.loads(msg.payload)
-        self.distance = distance_info['distance']
+        self.distance = float(distance_info['distance'])
         self.is_person = distance_info['is_person']
 
     def led_control(self, msg):
