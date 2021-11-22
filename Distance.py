@@ -82,7 +82,7 @@ class Distance:
                     "distance": distance
                 }
                 self.client.publish("service/distance", json.dumps(msg))
-                print("publishing {msg}")
+                print(f"publishing {msg}")
                 time.sleep(3)
         except KeyboardInterrupt:
             print("Finished")
