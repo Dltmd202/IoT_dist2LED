@@ -1,5 +1,5 @@
 import json
-
+import RPi.GPIO as gpio
 import paho.mqtt.client as mqtt
 
 class LedController:
