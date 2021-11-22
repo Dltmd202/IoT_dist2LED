@@ -57,8 +57,7 @@ class Distance:
             gpio.cleanup()
 
     def get_person(self):
-        res = gpio.input(self.pir_pin) == gpio.LOW
-        return res
+        return gpio.input(self.pir_pin) == True
 
     def run(self, kwargs=["localhost"]):
         self.client.connect("localhost")
