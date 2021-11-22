@@ -40,25 +40,18 @@ class ServerApplication:
 
     def led_control(self, msg):
         will_work = False
-        if self.distance < 20.:
+        if int(self.distance) < 20:
             will_work = self.led_red
-        elif self.distance < 40.:
+        elif int(self.distance) < 40:
             will_work = self.led_green
-        elif self.distance < 10000.:
+        elif int(self.distance) < 10000:
             will_work = self.led_blue
-        else:
-            will_work = False
-        print(self.distance)
-        print(will_work)
-        print(self.working_led)
         msg = {
             "distance": self.distance,
-            "before_led": self.working_led,
-            "after_led": will_work
+            "will_work": will_work,
         }
         self.client.publish("control/led", json.dumps(msg))
         print(self.working_led)
-        self.working_led = will_work
 
 
     def run(self, kwargs=["localhost"]):
