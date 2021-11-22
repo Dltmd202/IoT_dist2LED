@@ -49,8 +49,8 @@ class LedController:
         self.before_led = distance_info['before_led']
         self.after_led = distance_info['after_led']
 
-    def run(self, kwargs=["localhost"]):
-        self.client.connect(*kwargs)
+    def run(self):
+        self.client.connect("localhost")
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
