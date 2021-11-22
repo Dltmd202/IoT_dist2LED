@@ -41,15 +41,16 @@ class ServerApplication:
     def led_control(self, msg):
         will_work = False
         msg = {
+            "distance": self.distance,
             "green": False,
             "red": False,
             "blue": False,
         }
-        if int(self.distance) < 20:
+        if self.distance <= 20:
             msg["red"] = True
-        elif int(self.distance) < 40:
+        elif 20 < self.distance <= 40:
             msg["green"] = True
-        elif int(self.distance) < 10000:
+        elif 40 < self.distance:
             msg["blue"] = True
         self.client.publish("control/led", json.dumps(msg))
         print(self.working_led)
