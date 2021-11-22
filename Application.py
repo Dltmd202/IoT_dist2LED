@@ -2,13 +2,11 @@ import json
 import paho.mqtt.client as mqtt
 
 class ServerApplication:
-    def __init__(self, is_person=False, distance=0., led_red=False,
-                 led_green=False, led_blue=False):
+    def __init__(self, is_person=False, distance=0., status=None):
         self.client = self.getClient()
         self.is_person = is_person
         self.distance = distance
-        self.status = None
-        self.working_led = None
+        self.status = status
 
 
     def getClient(self):

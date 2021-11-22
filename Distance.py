@@ -18,7 +18,7 @@ class Distance:
         gpio.setmode(gpio.BCM)
         gpio.setup(self.trig_pin, gpio.OUT)
         gpio.setup(self.echo_pin, gpio.IN)
-        gpio.setup(self.pir_pin, gpio.OUT)
+        gpio.setup(self.pir_pin, gpio.IN)
 
     def get_client(self):
         client = mqtt.Client()
