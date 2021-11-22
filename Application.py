@@ -48,6 +48,8 @@ class ServerApplication:
             will_work = self.led_blue
         else:
             will_work = False
+        print(self.distance)
+        print(will_work)
         if self.working_led != will_work:
             msg = {
                 "distance": self.distance,
