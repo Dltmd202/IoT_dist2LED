@@ -23,7 +23,7 @@ class ServerApplication:
             client.subscribe("service/led")
 
         def on_message(client, userdata, msg):
-            print(f"[{msg.topic}] Get Message: {str(msg.payload)}")
+            print(f"[{msg.topic}] Get Message: {msg.payload}")
             if msg.topic == 'service/distance':
                 self.distance_dealing(msg)
             self.led_control()
