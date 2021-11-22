@@ -51,13 +51,12 @@ class ServerApplication:
         print(self.distance)
         print(will_work)
         print(self.working_led)
-        if self.working_led != will_work:
-            msg = {
-                "distance": self.distance,
-                "before_led": self.working_led,
-                "after_led": will_work
-            }
-            self.client.publish("control/led", json.dumps(msg))
+        msg = {
+            "distance": self.distance,
+            "before_led": self.working_led,
+            "after_led": will_work
+        }
+        self.client.publish("control/led", json.dumps(msg))
         print(self.working_led)
         self.working_led = will_work
 
