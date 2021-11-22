@@ -26,7 +26,7 @@ class ServerApplication:
             print(f"[{msg.topic}] Get Message: {msg.payload}")
             if msg.topic == 'service/distance':
                 self.distance_dealing(msg)
-            self.led_control()
+            self.led_control(msg)
 
         client.on_connect = on_connect
         client.on_message = on_message
