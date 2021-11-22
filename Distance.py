@@ -77,7 +77,8 @@ class Distance:
 
         try:
             while True:
-                (res, distance) = self.res_or_distance()
+                res = self.get_person()
+                distance = self.get_distance()
                 msg = {
                     "res": res,
                     "distance": distance
