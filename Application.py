@@ -40,11 +40,11 @@ class ServerApplication:
 
     def led_control(self, msg):
         will_work = False
-        if self.distance < 20:
+        if self.distance < 20.:
             will_work = self.led_red
-        elif self.distance < 40:
+        elif self.distance < 40.:
             will_work = self.led_green
-        elif self.distance < 10000:
+        elif self.distance < 10000.:
             will_work = self.led_blue
         else:
             will_work = False
