@@ -55,6 +55,7 @@ class ServerApplication:
                 "after_led": will_work
             }
             self.client.publish("control/led", json.dumps(msg))
+        print(self.working_led)
         self.working_led = will_work
 
 
