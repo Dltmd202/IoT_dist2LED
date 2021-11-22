@@ -47,13 +47,12 @@ class Distance:
                     pulse_start = time.time()
                 while gpio.input(self.echo_pin) == 1:
                     pulse_end = time.time()
-
-            pulse_duration = pulse_end - pulse_start
-            distance = pulse_duration * 34000 / 2
-            distance = round(distance, 2)
-            self.distance = distance
-            print(distance)
-            return distance
+                pulse_duration = pulse_end - pulse_start
+                distance = pulse_duration * 34000 / 2
+                distance = round(distance, 2)
+                self.distance = distance
+                print(distance)
+                return distance
         except KeyboardInterrupt:
             distance = 0
             gpio.cleanup()
