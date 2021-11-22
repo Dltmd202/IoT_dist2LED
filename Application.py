@@ -55,7 +55,7 @@ class ServerApplication:
                 "after_led": will_work
             }
             self.client.publish("control/led", json.dumps(msg))
-            self.working_led = will_work
+        self.working_led = will_work
 
 
     def run(self, kwargs=["localhost"]):

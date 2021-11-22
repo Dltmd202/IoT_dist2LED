@@ -37,7 +37,7 @@ class LedController:
         return client
 
     def run_led(self):
-        if self.before_led != self.after_led:
+        if self.before_led:
             gpio.output(self.before_led, False)
         gpio.output(self.after_led, True)
 
