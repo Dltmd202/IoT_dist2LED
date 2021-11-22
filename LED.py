@@ -12,8 +12,6 @@ class LedController:
         self.led_red = led_red
         self.led_green = led_green
         self.led_blue = led_blue
-        self.will_work = None
-        self.before_led = None
         self.gpio_init()
 
     def gpio_init(self):
@@ -27,7 +25,7 @@ class LedController:
 
         def on_connect(client, userdata, flags, rc):
             print("connected with result code " + str(rc))
-            client.subscribe("service/led")
+            client.subscribe("control/led")
 
         def on_message(client, userdata, msg):
             print(f"[{msg.topic}] Get Message: {msg.payload}")
@@ -39,8 +37,9 @@ class LedController:
         return client
 
     def run_led(self):
-        gpio.output(self.before_led, False)
-        gpio.output(self.will_work, True)
+        if self.before_led != self.after_led:
+            gpio.output(self.before_led, False)
+        gpio.output(self.after_led, True)
 
 
     def distance_dealing(self, msg):
@@ -55,7 +54,7 @@ class LedController:
             self.client.loop_forever()
         except KeyboardInterrupt:
             print("Finished!")
-            self.client.unsubscribe("service/#")
+            self.client.unsubscribe("control/led")
             self.client.disconnect()
 
 

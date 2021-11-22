@@ -19,14 +19,15 @@ class ServerApplication:
 
         def on_connect(client, userdata, flags, rc):
             print("connected with result code " + str(rc))
-            client.subscribe("service/distance")
-            client.subscribe("service/led")
+            client.subscribe("sensor/distance")
+            client.subscribe("control/led")
 
         def on_message(client, userdata, msg):
             print(f"[{msg.topic}] Get Message: {msg.payload}")
-            if msg.topic == 'service/distance':
+            if msg.topic == 'sensor/distance':
                 self.distance_dealing(msg)
-            self.led_control(msg)
+            if self.is_person:
+                self.led_control(msg)
 
         client.on_connect = on_connect
         client.on_message = on_message
@@ -34,23 +35,26 @@ class ServerApplication:
 
     def distance_dealing(self, msg):
         distance_info = json.loads(msg.payload)
-        self.distance = int(distance_info['distance'])
+        self.distance = distance_info['distance']
+        self.is_person = distance_info['is_person']
 
     def led_control(self, msg):
-        will_work = 0
-        if self.distance >= 40:
-            will_work = self.led_blue
-        elif self.distance >= 20:
-            will_work = self.led_green
-        else:
+        will_work = False
+        if self.distance < 20:
             will_work = self.led_red
+        elif self.distance < 40:
+            will_work = self.led_green
+        elif self.distance < 10000:
+            will_work = self.led_blue
+        else:
+            will_work = False
         if self.working_led != will_work:
             msg = {
                 "distance": self.distance,
                 "before_led": self.working_led,
                 "after_led": will_work
             }
-            self.client.publish("service/led", json.dumps(msg))
+            self.client.publish("control/led", json.dumps(msg))
             self.working_led = will_work
 
 
@@ -60,7 +64,8 @@ class ServerApplication:
             self.client.loop_forever()
         except KeyboardInterrupt:
             print("Finished!")
-            self.client.unsubscribe("service/#")
+            self.client.unsubscribe("sensor/distance")
+            self.client.unsubscribe("control/led")
             self.client.disconnect()
 
 

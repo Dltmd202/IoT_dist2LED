@@ -25,7 +25,7 @@ class Distance:
 
         def on_connect(client, userdata, flags, rc):
             print("connected with result code " + str(rc))
-            client.subscribe("server/distance")
+            client.subscribe("sensor/distance")
 
         def on_publish(client, userdata, mid):
             msg_id = mid
@@ -58,7 +58,6 @@ class Distance:
 
     def get_person(self):
         res = gpio.input(self.pir_pin) == gpio.LOW
-        print(res)
         return res
 
     def run(self, kwargs=["localhost"]):
@@ -67,13 +66,15 @@ class Distance:
 
         try:
             while True:
-                res = self.get_person()
+                is_person = self.get_person()
                 distance = self.get_distance()
                 msg = {
-                    "res": res,
+                    "is_person": is_person,
                     "distance": distance
                 }
-                self.client.publish("service/distance", json.dumps(msg))
+                if not is_person:
+                    msg['distance'] = 10000
+                self.client.publish("sensor/distance", json.dumps(msg))
                 print(f"publishing {msg}")
                 time.sleep(3)
         except KeyboardInterrupt:
