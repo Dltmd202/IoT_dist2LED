@@ -30,7 +30,7 @@ class LedController:
             client.subscribe("service/led")
 
         def on_message(client, userdata, msg):
-            print(f"[{msg.topic}] Get Message: {str(msg.payload)}")
+            print(f"[{msg.topic}] Get Message: {msg.payload}")
             self.distance_dealing(msg)
             self.run_led()
 
