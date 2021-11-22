@@ -59,17 +59,9 @@ class Distance:
             gpio.cleanup()
 
     def get_person(self):
-        time.sleep(1)
         res = gpio.input(self.pir_pin) == gpio.LOW
         print(res)
         return res
-
-    def res_or_distance(self):
-        res = self.get_person()
-        if res:
-            return (res, self.get_distance())
-        else:
-            return (res, 0.)
 
     def run(self, kwargs=["localhost"]):
         self.client.connect("localhost")
@@ -79,6 +71,7 @@ class Distance:
             while True:
                 res = self.get_person()
                 distance = self.get_distance()
+                print(res, distance)
                 msg = {
                     "res": res,
                     "distance": distance
