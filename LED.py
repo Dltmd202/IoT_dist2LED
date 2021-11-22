@@ -60,5 +60,5 @@ class LedController:
 
 
 if __name__ == '__main__':
-    led = LedController
+    led = LedController()
     led.run()
