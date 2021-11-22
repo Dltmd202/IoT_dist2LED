@@ -47,7 +47,7 @@ class ServerApplication:
         elif 20 < self.distance <= 40:
             msg["green"] = True
             status = "green"
-        elif 40 < self.distance:
+        elif 40 < self.distance < 10000:
             msg["blue"] = True
             status = "blue"
         if not self.status or self.status != status:
