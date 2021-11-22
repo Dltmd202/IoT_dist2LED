@@ -7,10 +7,7 @@ class ServerApplication:
         self.client = self.getClient()
         self.is_person = is_person
         self.distance = distance
-        self.led_red = led_red
-        self.led_green = led_green
-        self.led_blue = led_blue
-        self.leds = [self.led_red, self.led_green, self.led_blue]
+        self.status = None
         self.working_led = None
 
 
@@ -39,7 +36,7 @@ class ServerApplication:
         self.is_person = distance_info['is_person']
 
     def led_control(self, msg):
-        will_work = False
+        status = None
         msg = {
             "distance": self.distance,
             "green": False,
@@ -48,12 +45,16 @@ class ServerApplication:
         }
         if self.distance <= 20:
             msg["red"] = True
+            status = "red"
         elif 20 < self.distance <= 40:
             msg["green"] = True
+            status = "green"
         elif 40 < self.distance:
             msg["blue"] = True
-        self.client.publish("control/led", json.dumps(msg))
-        print(self.working_led)
+            status = "blue"
+        if self.status and self.status != status:
+            self.status = status
+            self.client.publish("control/led", json.dumps(msg))
 
 
     def run(self, kwargs=["localhost"]):
