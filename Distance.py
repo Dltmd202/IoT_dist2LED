@@ -51,7 +51,6 @@ class Distance:
                 distance = pulse_duration * 34000 / 2
                 distance = round(distance, 2)
                 self.distance = distance
-                print(distance)
                 return distance
         except KeyboardInterrupt:
             distance = 0
@@ -70,7 +69,6 @@ class Distance:
             while True:
                 res = self.get_person()
                 distance = self.get_distance()
-                print(res, distance)
                 msg = {
                     "res": res,
                     "distance": distance
