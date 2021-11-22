@@ -71,7 +71,7 @@ class Distance:
             return (res, 0.)
 
     def run(self, kwargs=["localhost"]):
-        self.client.connect(**kwargs)
+        self.client.connect("localhost")
         self.client.loop_start()
 
         try:
