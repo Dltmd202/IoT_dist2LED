@@ -62,6 +62,8 @@ class ServerApplication:
         elif 40 < self.distance < 10000:
             msg["blue"] = True
             status = "blue"
+        else:
+            status = "None"
         if not self.status or self.status != status:
             self.status = status
             self.client.publish("control/led", json.dumps(msg))
