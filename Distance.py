@@ -59,12 +59,8 @@ class Distance:
             gpio.cleanup()
 
     def get_person(self):
-        res = gpio.output(self.pir_pin, True)
         time.sleep(1)
-
-        res = gpio.output(self.pir_pin, False)
-        time.sleep(1)
-        return res
+        return gpio.input(self.pir_pin) == gpio.LOW
 
     def res_or_distance(self):
         res = self.get_person()
