@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt
 
 class LedController:
     def __init__(self, led_red=22, led_green=27, led_blue=17):
-        self.client = self.get_clent()
+        self.client = self.getClient()
         self.onLight = None
         self.distance = None
         self.before_led = None
